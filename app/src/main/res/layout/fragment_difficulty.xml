@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".DifficultyFragment"
+        android:padding="@dimen/grid_4"
+        android:layout_marginTop="@dimen/grid_4">
+
+        <TextView
+            android:id="@+id/quiz_name"
+            android:fontFamily="@font/formula1_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/medium_text_size"
+            android:padding="@dimen/grid_12"
+            android:text="@string/quiz_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/difficulty_header_text"
+            android:fontFamily="@font/formula1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/default_text_size"
+            android:padding="@dimen/grid_12"
+            android:text="@string/difficulty_header_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/quiz_name"/>
+
+        <Button
+            android:id="@+id/easy_button"
+            android:textSize="@dimen/default_text_size"
+            android:layout_marginTop="@dimen/grid_12"
+            android:background="@drawable/easy_button_design"
+            android:gravity="center"
+            android:paddingBottom="@dimen/grid_4"
+            android:paddingTop="@dimen/grid_4"
+            android:paddingLeft="@dimen/grid_32"
+            android:paddingRight="@dimen/grid_32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/difficulty_header_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:fontFamily="@font/formula1"
+            android:text="@string/easy_button"/>
+
+        <Button
+            android:id="@+id/medium_button"
+            android:textSize="@dimen/default_text_size"
+            android:layout_marginTop="@dimen/grid_12"
+            android:gravity="center"
+            android:background="@drawable/medium_button_desing"
+            android:paddingBottom="@dimen/grid_4"
+            android:paddingTop="@dimen/grid_4"
+            android:paddingLeft="@dimen/grid_32"
+            android:paddingRight="@dimen/grid_32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/easy_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:fontFamily="@font/formula1"
+            android:text="@string/medium_button"/>
+
+        <Button
+            android:id="@+id/hard_button"
+            android:textSize="@dimen/default_text_size"
+            android:layout_marginTop="@dimen/grid_12"
+            android:gravity="center"
+            android:background="@drawable/hard_button_design"
+            android:paddingBottom="@dimen/grid_4"
+            android:paddingTop="@dimen/grid_4"
+            android:paddingLeft="@dimen/grid_32"
+            android:paddingRight="@dimen/grid_32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/medium_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:fontFamily="@font/formula1"
+            android:text="@string/hard_button"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

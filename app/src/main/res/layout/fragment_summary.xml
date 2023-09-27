@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SummaryFragment"
+    android:padding="@dimen/grid_4"
+    android:layout_marginTop="@dimen/grid_4">
+
+    <TextView
+        android:id="@+id/quiz_name"
+        android:fontFamily="@font/formula1_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/medium_text_size"
+        android:padding="@dimen/grid_12"
+        android:text="@string/quiz_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/results_header"
+        android:fontFamily="@font/formula1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/default_text_size"
+        android:padding="@dimen/grid_12"
+        android:text="@string/results_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quiz_name"/>
+
+    <TextView
+        android:id="@+id/total_questions"
+        android:fontFamily="@font/formula1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/default_text_size"
+        android:padding="@dimen/grid_12"
+        android:textColor="@color/blue"
+        android:text="@string/total_questions_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/results_header"/>
+
+
+
+
+
+    <TextView
+        android:id="@+id/correct_answers"
+        android:fontFamily="@font/formula1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/default_text_size"
+        android:padding="@dimen/grid_12"
+        android:textColor="@color/green"
+        android:text="@string/correct_answers_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/total_questions"/>
+
+    <TextView
+        android:id="@+id/wrong_answers"
+        android:fontFamily="@font/formula1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/default_text_size"
+        android:padding="@dimen/grid_12"
+        android:textColor="@color/red"
+        android:text="@string/wrong_answers_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/correct_answers"/>
+
+
+    <Button
+        android:id="@+id/finish_button"
+        android:textSize="@dimen/default_text_size"
+        android:layout_marginTop="@dimen/grid_12"
+        android:gravity="center"
+        android:background="@drawable/default_button_design"
+        android:paddingBottom="@dimen/grid_4"
+        android:paddingTop="@dimen/grid_4"
+        android:paddingLeft="@dimen/grid_32"
+        android:paddingRight="@dimen/grid_32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/grid_50"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/formula1"
+        android:text="@string/end_button"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

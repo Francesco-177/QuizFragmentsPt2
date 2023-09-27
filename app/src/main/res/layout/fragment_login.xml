@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginFragment"
+    android:padding="@dimen/grid_4"
+    android:layout_marginTop="@dimen/grid_4">
+
+    <TextView
+        android:id="@+id/header_text"
+        android:layout_width="wrap_content"
+        android:fontFamily="@font/formula1_bold"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/big_text_size"
+        android:paddingStart="@dimen/grid_8"
+        android:paddingEnd="@dimen/grid_8"
+        android:text="@string/header_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/first_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/grid_12"
+        android:hint="@string/first_name_label"
+        android:inputType="text"
+        android:textSize="@dimen/data_text_size"
+        app:layout_constraintEnd_toEndOf="@+id/last_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_text"
+        android:fontFamily="@font/formula1"
+        android:autofillHints="name" />
+
+    <EditText
+        android:id="@+id/last_name"
+        android:textSize="@dimen/data_text_size"
+        android:layout_marginStart="@dimen/grid_24"
+        android:layout_margin="@dimen/grid_12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/first_last_label"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@+id/first_name"
+        app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints="name"
+        android:fontFamily="@font/formula1"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+    <EditText
+        android:id="@+id/email"
+        android:textSize="@dimen/data_text_size"
+        android:layout_margin="@dimen/grid_12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/email_label"
+        android:inputType="textEmailAddress"
+        app:layout_constraintTop_toBottomOf="@+id/last_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/formula1"
+        android:autofillHints="emailAddress"/>
+
+    <EditText
+        android:id="@+id/phone"
+        android:textSize="@dimen/data_text_size"
+        android:layout_marginStart="@dimen/grid_24"
+        android:layout_margin="@dimen/grid_12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/phone_label"
+        android:inputType="phone"
+        app:layout_constraintTop_toBottomOf="@+id/email"
+        app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints="name"
+        android:fontFamily="@font/formula1"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <Button
+        android:id="@+id/start_button"
+        android:background="@drawable/default_button_design"
+        android:textSize="@dimen/default_text_size"
+        android:layout_marginTop="@dimen/grid_12"
+        android:gravity="center"
+        android:padding="@dimen/grid_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/grid_50"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/formula1"
+        android:text="@string/start_quiz_button"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,33 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" tools:ignore="Typos">example1</string>
+    <string name="header_text">Enter your personal details</string>
+    <string name="questions_header">Difficulty %s Number of questions %s</string>
+    <string name="question_text">Question Here</string>
+    <string name="quiz_name">THE F1 QUIZ</string>
+    <string name="difficulty_header_text">Choice a difficulty</string>
+    <string name="first_name_label">First name : </string>
+    <string name="first_last_label">Last name : </string>
+    <string name="email_label">Email : </string>
+    <string name="phone_label">Phone : </string>
+    <string name="start_quiz_button">START QUIZ</string>
+    <string name="easy_button">EASY</string>
+    <string name="medium_button">MEDIUM</string>
+    <string name="hard_button">HARD</string>
+    <string name="add_text_validation">Please fill in all form fields</string>
+    <string name="submit_button">Next Question</string>
+    <string name="finish_button">Finish Quiz</string>
+    <string name="option_one">Option One</string>
+    <string name="option_two">Option Two</string>
+    <string name="option_three">Option Three</string>
+    <string name="end_button">FINISH</string>
+    <string name="results_text">Congratulations %s, here are your results</string>
+    <string name="correct_answers_text">Correct answers: %s</string>
+    <string name="wrong_answers_text">Wrong answers: %s</string>
+    <string name="total_questions_text">Total questions: %s</string>
+    <string name="select_option_validation">Please select an option</string>
+    <string name="finish_quiz">FINISH QUIZ</string>
+    <string name="next_question">NEXT QUESTION</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

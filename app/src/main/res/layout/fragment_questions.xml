@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QuestionsFragment"
+    android:padding="@dimen/grid_4"
+    android:layout_marginTop="@dimen/grid_4">
+
+    <TextView
+        android:id="@+id/quiz_name"
+        android:fontFamily="@font/formula1_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/medium_text_size"
+        android:padding="@dimen/grid_12"
+        android:text="@string/quiz_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/questions_header"
+        android:fontFamily="@font/formula1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/default_text_size"
+        android:padding="@dimen/grid_12"
+        android:text="@string/questions_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quiz_name"/>
+
+    <TextView
+        android:id="@+id/question_text"
+        android:fontFamily="@font/formula1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/default_text_size"
+        android:padding="@dimen/grid_4"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questions_header"/>
+
+    <Button
+        android:id="@+id/option_one_button"
+        android:textSize="@dimen/default_text_size"
+        android:layout_marginTop="@dimen/grid_12"
+        android:background="@drawable/default_button_design"
+        android:gravity="center"
+        android:paddingBottom="@dimen/grid_4"
+        android:paddingTop="@dimen/grid_4"
+        android:paddingLeft="@dimen/grid_32"
+        android:paddingRight="@dimen/grid_32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/question_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/formula1"
+        android:text="@string/option_one"/>
+
+    <Button
+        android:id="@+id/option_two_button"
+        android:textSize="@dimen/default_text_size"
+        android:layout_marginTop="@dimen/grid_12"
+        android:gravity="center"
+        android:background="@drawable/default_button_design"
+        android:paddingBottom="@dimen/grid_4"
+        android:paddingTop="@dimen/grid_4"
+        android:paddingLeft="@dimen/grid_32"
+        android:paddingRight="@dimen/grid_32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/option_one_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/formula1"
+        android:text="@string/option_two"/>
+
+    <Button
+        android:id="@+id/option_three_button"
+        android:textSize="@dimen/default_text_size"
+        android:layout_marginTop="@dimen/grid_12"
+        android:gravity="center"
+        android:background="@drawable/default_button_design"
+        android:paddingBottom="@dimen/grid_4"
+        android:paddingTop="@dimen/grid_4"
+        android:paddingLeft="@dimen/grid_32"
+        android:paddingRight="@dimen/grid_32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/option_two_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/formula1"
+        android:text="@string/option_three"/>
+
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/easy_button_design"
+        android:fontFamily="@font/formula1"
+        android:gravity="center"
+        android:paddingLeft="@dimen/grid_32"
+        android:paddingTop="@dimen/grid_4"
+        android:paddingRight="@dimen/grid_32"
+        android:layout_marginBottom="@dimen/grid_50"
+        android:paddingBottom="@dimen/grid_4"
+        android:text="@string/submit_button"
+        android:textSize="@dimen/default_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
