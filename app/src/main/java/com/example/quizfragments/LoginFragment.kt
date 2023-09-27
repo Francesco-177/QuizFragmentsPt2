@@ -78,8 +78,9 @@ class LoginFragment : Fragment() {
             if (firstNameText.isEmpty() || lastNameText.isEmpty() || emailText.isEmpty() || phoneText.isEmpty()) {
                 Toast.makeText(requireContext(), getString(R.string.add_text_validation), Toast.LENGTH_LONG).show()
             } else {
-                //val fullName = "$firstNameText $lastNameText"
-                //Constants.fullName = fullName
+
+                val fullName = "$firstNameText $lastNameText"
+                Constants.fullName = fullName
 
                 // Crear una instancia del fragmento que deseas cargar
                 val difficultyFragment = DifficultyFragment()
@@ -97,7 +98,10 @@ class LoginFragment : Fragment() {
                 // Confirmar la transacción
                 transaction.commit()
 
+
+
                 hideKeyboard()
+                //limpiar campos
                 clearInputFields()
 
             }

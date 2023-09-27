@@ -45,14 +45,17 @@ class QuestionsFragment : Fragment() {
 
 
 
+
+
     private var mCurrentPosition: Int = 1 // Default and the first question position
     private var mQuestionsList: ArrayList<Question>? = null
     private var mSelectedOptionPosition: Int = 0
     private var mCorrectAnswers: Int = 0
     private var mWrongAnswers: Int = 0
 
-    private val bundle = requireArguments()
-    private val numberOfQuestions = bundle.getInt("totalQuestions", 0)
+    private val numberOfQuestions = Constants.total_questions
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,28 +129,23 @@ class QuestionsFragment : Fragment() {
                 mSelectedOptionPosition = 0 // Restablece la selección de opción a 0 después de procesar la respuesta.
 
                 // Incrementa mCurrentPosition solo si no has llegado al final de las preguntas
-                if (mCurrentPosition < numberOfQuestions) {
+                if (mCurrentPosition < numberOfQuestions!!) {
                     mCurrentPosition++
                     setQuestion()
                 } else{
 
-                    // Crear un Bundle y agregar datos
-                    val bundle = Bundle()
-                    bundle.putInt("correctAnswers", mCorrectAnswers)
-                    bundle.putInt("wrongAnswers", mWrongAnswers)
-                    bundle.putInt("totalQuestions", numberOfQuestions)
+                    Constants.wrong_answers = mWrongAnswers
 
-                    // Crear un Intent
-                    val intent = Intent(requireContext(), SummaryFragment::class.java)
+                    Constants.correct_answers = mCorrectAnswers
 
-                    // Colocar el Bundle en el Intent
-                    intent.putExtras(bundle)
 
                     val summaryFragment = SummaryFragment()
                     val fragmentManager = requireActivity().supportFragmentManager
                     val transaction = fragmentManager.beginTransaction()
                     transaction.replace(R.id.fragment_container, summaryFragment)
                     transaction.commit()
+
+
 
                 }
 

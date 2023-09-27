@@ -64,34 +64,46 @@ class DifficultyFragment : Fragment() {
         easyButton.setOnClickListener {
             numberOfQuestions = 5
 
-            val bundle = Bundle()
-            bundle.putInt("totalQuestions", numberOfQuestions)
+            Constants.total_questions = numberOfQuestions
+
+            //cambio de fragmento
 
             val questionsFragment = QuestionsFragment()
-            questionsFragment.arguments = bundle  // Pasa el Bundle al fragmento de preguntas
-
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, questionsFragment)
             transaction.commit()
+
         }
 
 
         mediumButton.setOnClickListener {
 
             numberOfQuestions = 10
+            Constants.total_questions = numberOfQuestions
 
-            val bundle = Bundle()
-            bundle.putInt("totalQuestions", numberOfQuestions)
-            val intent = Intent(requireContext(), QuestionsFragment::class.java)
-            intent.putExtras(bundle)
+            //cambio de fragmento
 
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment_container, QuestionsFragment()).commit()
+            val questionsFragment = QuestionsFragment()
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, questionsFragment)
+            transaction.commit()
+
         }
 
         hardButton.setOnClickListener {
 
             numberOfQuestions = 20
+            Constants.total_questions = numberOfQuestions
+
+            //cambio de fragmento
+
+            val questionsFragment = QuestionsFragment()
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, questionsFragment)
+            transaction.commit()
 
 
 

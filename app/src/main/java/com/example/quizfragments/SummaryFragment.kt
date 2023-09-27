@@ -36,12 +36,11 @@ class SummaryFragment : Fragment() {
         get() = view?.findViewById(R.id.wrong_answers)
 
 
-    private val bundle = requireArguments()
+    private val fullName = Constants.fullName
 
-    private val correctAnswers = bundle.getInt("correctAnswers", 0)
-    private val wrongAnswers = bundle.getInt("wrongAnswers", 0)
-    private val totalQuestions = bundle.getInt("totalQuestions", 0)
-
+    private val correctAnswers = Constants.correct_answers
+    private val wrongAnswers = Constants.wrong_answers
+    private val totalQuestions = Constants.total_questions
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +62,10 @@ class SummaryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val fullNameText = getString(R.string.results_text,fullName)
+        resultsHeaderTV?.text = fullNameText
+
+
         val totalQuestionsText = getString(R.string.total_questions_text, totalQuestions.toString())
         totalQuestionsTV?.text= totalQuestionsText
 
@@ -71,6 +74,8 @@ class SummaryFragment : Fragment() {
 
         val wrongAnswersText = getString(R.string.wrong_answers_text, wrongAnswers.toString())
         wrongAnswersTV?.text= wrongAnswersText
+
+
 
 
         finishButton?.setOnClickListener{

@@ -4,6 +4,12 @@ package com.example.quizfragments
 
 object Constants{
 
+    var fullName: String? = null
+    var total_questions: Int? = null
+    var correct_answers: Int? = null
+    var wrong_answers: Int? = null
+    
+
     fun getQuestions(): ArrayList<Question>{
 
 
