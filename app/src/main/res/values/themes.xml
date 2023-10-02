@@ -12,7 +12,16 @@
         <!-- Customize your theme here. -->
 
 
-
     </style>
+
     <style name="Theme.QuizFragments" parent="Base.Theme.QuizFragments" />
+
+    <style name="Theme.QuizFragments.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.QuizFragments.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.QuizFragments.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

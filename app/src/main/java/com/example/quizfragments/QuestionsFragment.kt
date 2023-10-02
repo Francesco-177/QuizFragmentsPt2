@@ -10,6 +10,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,20 +46,25 @@ class QuestionsFragment : Fragment() {
     private val questionsHeader: TextView?
         get() = view?.findViewById(R.id.questions_header)
 
-
-
-
-
     private var mCurrentPosition: Int = 1 // Default and the first question position
     private var mQuestionsList: ArrayList<Question>? = null
     private var mSelectedOptionPosition: Int = 0
     private var mCorrectAnswers: Int = 0
     private var mWrongAnswers: Int = 0
+    private var score: Int = 0
 
-    private val numberOfQuestions = Constants.total_questions
+    private var currentCategory: String = ""
 
 
 
+    // Define the categories
+    private val categories = listOf(
+        "Legendary Drivers",
+        "Historic Teams",
+        "Records and Statistics",
+        "Epic Races",
+        "2021 F1 Season"
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +74,8 @@ class QuestionsFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
 
         }
+
+
     }
 
     override fun onCreateView(
@@ -76,19 +86,43 @@ class QuestionsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_questions, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-
+    fun makeQuestions(numberOfQuestions:Int, fullName:String){
 
         val questionList = Constants.getQuestions()
 
-        questionList.shuffle()
 
-        mQuestionsList = questionList
 
-        setQuestion()
 
+        // Create a map to store shuffled lists by category
+        val questionsByCategory = mutableMapOf<String, ArrayList<Question>>()
+
+        // Iterate through the categories
+        for (category in categories) {
+            // Filter the questions for the current category
+            val categoryQuestions = questionList.filter { it.category == category }
+
+            // Shuffle the questions for the current category
+            val shuffledQuestions = ArrayList(categoryQuestions.shuffled())
+
+            // Add the shuffled list to the map with the category as the key
+            questionsByCategory[category] = shuffledQuestions
+        }
+
+        val legendaryDriversQuestions = questionsByCategory["Legendary Drivers"]
+        val historicTeamsQuestions = questionsByCategory["Historic Teams"]
+        val recordsAndStatisticsQuestions = questionsByCategory["Records and Statistics"]
+        val epicRacesQuestions = questionsByCategory["Epic Races"]
+        val f1SeasonQuestions = questionsByCategory["2021 F1 Season"]
+
+
+        //questionList.shuffle()
+
+        //mQuestionsList = recordsAndStatisticsQuestions?.let { ArrayList(it) }
+
+
+
+        setQuestion(numberOfQuestions)
 
         optionOneButton?.setOnClickListener{
 
@@ -131,36 +165,30 @@ class QuestionsFragment : Fragment() {
                 // Incrementa mCurrentPosition solo si no has llegado al final de las preguntas
                 if (mCurrentPosition < numberOfQuestions!!) {
                     mCurrentPosition++
-                    setQuestion()
+                    setQuestion(numberOfQuestions)
                 } else{
 
-                    Constants.wrong_answers = mWrongAnswers
 
-                    Constants.correct_answers = mCorrectAnswers
-
-
-                    val summaryFragment = SummaryFragment()
-                    val fragmentManager = requireActivity().supportFragmentManager
-                    val transaction = fragmentManager.beginTransaction()
-                    transaction.replace(R.id.fragment_container, summaryFragment)
-                    transaction.commit()
-
+                    val intent = Intent(context, SummaryActivity::class.java)
+                    intent.putExtra("fullName",fullName)
+                    intent.putExtra("numberOfQuestions",numberOfQuestions)
+                    intent.putExtra("mCorrectAnswers",mCorrectAnswers)
+                    intent.putExtra("mWrongAnswers",mWrongAnswers)
+                    startActivity(intent)
 
 
                 }
 
             }else{
+                //logica para cuando salte de pregunta
                 Toast.makeText(requireContext(), getString(R.string.select_option_validation), Toast.LENGTH_LONG).show()
             }
 
 
         }
-
-
-
     }
 
-    private fun setQuestion() {
+    private fun setQuestion(numberOfQuestions: Int) {
 
         optionOneButton?.setBackgroundResource(R.drawable.default_button_design)
         optionTwoButton?.setBackgroundResource(R.drawable.default_button_design)
@@ -180,18 +208,21 @@ class QuestionsFragment : Fragment() {
         optionThreeButton?.text = question.optionThree
     }
 
+    fun setCurrentCategory(category: String) {
+        currentCategory = category
+        // Lógica adicional basada en la categoría actual, si es necesario.
+    }
+
+
+
 
     companion object {
-
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DifficultyFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        fun newInstance(category: String) = QuestionsFragment().apply {
+            arguments = Bundle().apply {
+                putString("category", category)
             }
-
+        }
     }
+
 }

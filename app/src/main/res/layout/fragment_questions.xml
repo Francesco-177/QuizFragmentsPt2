@@ -8,18 +8,7 @@
     android:padding="@dimen/grid_4"
     android:layout_marginTop="@dimen/grid_4">
 
-    <TextView
-        android:id="@+id/quiz_name"
-        android:fontFamily="@font/formula1_bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="@dimen/medium_text_size"
-        android:padding="@dimen/grid_12"
-        android:text="@string/quiz_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/questions_header"
@@ -31,21 +20,9 @@
         android:padding="@dimen/grid_12"
         android:text="@string/questions_header"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_name"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    <TextView
-        android:id="@+id/question_text"
-        android:fontFamily="@font/formula1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="@dimen/default_text_size"
-        android:padding="@dimen/grid_4"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questions_header"/>
 
     <Button
         android:id="@+id/option_one_button"
@@ -59,7 +36,7 @@
         android:paddingRight="@dimen/grid_32"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/question_text"
+        app:layout_constraintTop_toBottomOf="@id/questions_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:fontFamily="@font/formula1"

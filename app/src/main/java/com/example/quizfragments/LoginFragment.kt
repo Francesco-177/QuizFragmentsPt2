@@ -60,15 +60,12 @@ class LoginFragment : Fragment() {
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        val startButton = view.findViewById<Button>(R.id.start_button)
+    fun getPersonalDetails(){
 
+        val startButton = view?.findViewById<Button>(R.id.start_button)
 
-        //Log.d(TAG, "onViewCreated")
-
-        startButton.setOnClickListener {
+        startButton?.setOnClickListener {
             val firstNameText = firstName?.text?.toString()?.trim() ?: ""
             val lastNameText = lastName?.text?.toString()?.trim() ?: ""
             val emailText = email?.text?.toString() ?: ""
@@ -80,28 +77,14 @@ class LoginFragment : Fragment() {
             } else {
 
                 val fullName = "$firstNameText $lastNameText"
-                Constants.fullName = fullName
+                //Constants.fullName = fullName
 
-                // Crear una instancia del fragmento que deseas cargar
-                val difficultyFragment = DifficultyFragment()
-
-                // Obtener el FragmentManager y comenzar una transacción
-                val fragmentManager = requireActivity().supportFragmentManager
-                val transaction = fragmentManager.beginTransaction()
-
-                // Reemplazar el fragmento actual con el nuevo fragmento
-                transaction.replace(R.id.fragment_container, difficultyFragment)
-
-                // Opcionalmente, agregar la transacción a la pila de retroceso
-                //transaction.addToBackStack(null)
-
-                // Confirmar la transacción
-                transaction.commit()
-
-
+                val intent = Intent(context, DifficultyActivity::class.java)
+                intent.putExtra("fullName",fullName)
+                startActivity(intent)
 
                 hideKeyboard()
-                //limpiar campos
+                //clear
                 clearInputFields()
 
             }

@@ -36,13 +36,6 @@ class SummaryFragment : Fragment() {
         get() = view?.findViewById(R.id.wrong_answers)
 
 
-    private val fullName = Constants.fullName
-
-    private val correctAnswers = Constants.correct_answers
-    private val wrongAnswers = Constants.wrong_answers
-    private val totalQuestions = Constants.total_questions
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -59,14 +52,12 @@ class SummaryFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_summary, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    fun showResults(fullName:String, numberOfQuestions:Int, correctAnswers:Int, wrongAnswers:Int){
         val fullNameText = getString(R.string.results_text,fullName)
         resultsHeaderTV?.text = fullNameText
 
 
-        val totalQuestionsText = getString(R.string.total_questions_text, totalQuestions.toString())
+        val totalQuestionsText = getString(R.string.total_questions_text, numberOfQuestions.toString())
         totalQuestionsTV?.text= totalQuestionsText
 
         val correctAnswersText = getString(R.string.correct_answers_text, correctAnswers.toString())
@@ -80,17 +71,11 @@ class SummaryFragment : Fragment() {
 
         finishButton?.setOnClickListener{
 
-            val loginFragment = LoginFragment()
-            val fragmentManager = requireActivity().supportFragmentManager
-            val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, loginFragment)
-            transaction.commit()
+            val intent = Intent(context, MainActivity::class.java)
+            startActivity(intent)
         }
-
-
-
-
     }
+
 
 
     companion object {

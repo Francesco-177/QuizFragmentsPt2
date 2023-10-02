@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" tools:ignore="Typos">example1</string>
+    <string name="app_name" tools:ignore="Typos">QuizPt2</string>
     <string name="header_text">Enter your personal details</string>
-    <string name="questions_header">Difficulty %s Number of questions %s</string>
+    <string name="questions_header">Question</string>
     <string name="question_text">Question Here</string>
     <string name="quiz_name">THE F1 QUIZ</string>
     <string name="difficulty_header_text">Choice a difficulty</string>
@@ -27,7 +27,19 @@
     <string name="select_option_validation">Please select an option</string>
     <string name="finish_quiz">FINISH QUIZ</string>
     <string name="next_question">NEXT QUESTION</string>
+
+    <string name="category_header_text">nothing</string>
+    <string name="score_text">Score: %s</string>
+
+    <string name="legendary_drivers">Legendary Drivers</string>
+    <string name="historic_teams">Historic Teams</string>
+    <string name="records_and_statistics">Records and Statistics</string>
+    <string name="epic_races">Epic Races</string>
+    <string name="f1_season">2021 F1 Season</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_questions">QuestionsActivity</string>
+
 
 </resources>

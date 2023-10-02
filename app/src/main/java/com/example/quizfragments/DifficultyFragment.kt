@@ -33,6 +33,7 @@ class DifficultyFragment : Fragment() {
     private var param2: String? = null
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -49,66 +50,44 @@ class DifficultyFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_difficulty, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    fun getDifficulty(fullName:String){
         var numberOfQuestions : Int = 0
 
-        val easyButton = view.findViewById<Button>(R.id.easy_button)
+        val easyButton = view?.findViewById<Button>(R.id.easy_button)
 
-        val mediumButton = view.findViewById<Button>(R.id.medium_button)
+        val mediumButton = view?.findViewById<Button>(R.id.medium_button)
 
-        val hardButton = view.findViewById<Button>(R.id.hard_button)
+        val hardButton = view?.findViewById<Button>(R.id.hard_button)
 
 
-        easyButton.setOnClickListener {
+        easyButton?.setOnClickListener {
+
             numberOfQuestions = 5
-
-            Constants.total_questions = numberOfQuestions
-
-            //cambio de fragmento
-
-            val questionsFragment = QuestionsFragment()
-            val fragmentManager = requireActivity().supportFragmentManager
-            val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, questionsFragment)
-            transaction.commit()
+            launchQuestionsActivity(numberOfQuestions,fullName)
 
         }
 
 
-        mediumButton.setOnClickListener {
-
+        mediumButton?.setOnClickListener {
             numberOfQuestions = 10
-            Constants.total_questions = numberOfQuestions
-
-            //cambio de fragmento
-
-            val questionsFragment = QuestionsFragment()
-            val fragmentManager = requireActivity().supportFragmentManager
-            val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, questionsFragment)
-            transaction.commit()
-
+            launchQuestionsActivity(numberOfQuestions,fullName)
         }
 
-        hardButton.setOnClickListener {
-
+        hardButton?.setOnClickListener {
             numberOfQuestions = 20
-            Constants.total_questions = numberOfQuestions
-
-            //cambio de fragmento
-
-            val questionsFragment = QuestionsFragment()
-            val fragmentManager = requireActivity().supportFragmentManager
-            val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragment_container, questionsFragment)
-            transaction.commit()
-
-
-
+            launchQuestionsActivity(numberOfQuestions,fullName)
 
         }
+    }
+
+    private fun launchQuestionsActivity(numberOfQuestions:Int,fullName:String ){
+        val intent = Intent(context, QuestionsActivity::class.java)
+
+        intent.putExtra("fullName",fullName)
+        intent.putExtra("numberOfQuestions",numberOfQuestions)
+
+        startActivity(intent)
+
     }
 
     companion object {

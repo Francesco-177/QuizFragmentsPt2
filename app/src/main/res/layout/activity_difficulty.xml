@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".DifficultyActivity">
 
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.quizfragments.LoginFragment"
+        android:id="@+id/difficultyFragment"
+        android:name="com.example.quizfragments.DifficultyFragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent"/>
 

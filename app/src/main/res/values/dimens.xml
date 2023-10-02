@@ -12,6 +12,12 @@
     <dimen name="data_text_size">25sp</dimen>
     <dimen name="default_text_size">20sp</dimen>
     <dimen name="discount_code_text_size">30sp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="appbar_padding">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
 
 
 </resources>
