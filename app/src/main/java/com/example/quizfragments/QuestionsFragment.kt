@@ -21,11 +21,6 @@ private const val ARG_PARAM2 = "param2"
 
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [QuestionsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class QuestionsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -87,12 +82,9 @@ class QuestionsFragment : Fragment() {
     }
 
 
-    fun makeQuestions(numberOfQuestions:Int, fullName:String){
+    fun makeQuestions(numberOfQuestions:Int, fullName:String, category: String){
 
         val questionList = Constants.getQuestions()
-
-
-
 
         // Create a map to store shuffled lists by category
         val questionsByCategory = mutableMapOf<String, ArrayList<Question>>()
@@ -115,14 +107,24 @@ class QuestionsFragment : Fragment() {
         val epicRacesQuestions = questionsByCategory["Epic Races"]
         val f1SeasonQuestions = questionsByCategory["2021 F1 Season"]
 
+        // Get the list of questions for the specified category
+        val selectedCategoryQuestions = questionsByCategory[category]
+
+        if (selectedCategoryQuestions != null) {
+            mQuestionsList = ArrayList(selectedCategoryQuestions)
+            currentCategory = category
+            mCurrentPosition = 1 // Restablece la posición actual a la primera pregunta
+            setQuestion(numberOfQuestions)
+        } else {
+            // Manejar el caso en que no se encuentra la categoría
+            Toast.makeText(requireContext(), "Categoría no encontrada", Toast.LENGTH_LONG).show()
+        }
+
 
         //questionList.shuffle()
 
         //mQuestionsList = recordsAndStatisticsQuestions?.let { ArrayList(it) }
 
-
-
-        setQuestion(numberOfQuestions)
 
         optionOneButton?.setOnClickListener{
 
@@ -186,6 +188,8 @@ class QuestionsFragment : Fragment() {
 
 
         }
+
+
     }
 
     private fun setQuestion(numberOfQuestions: Int) {
@@ -208,12 +212,9 @@ class QuestionsFragment : Fragment() {
         optionThreeButton?.text = question.optionThree
     }
 
-    fun setCurrentCategory(category: String) {
-        currentCategory = category
-        // Lógica adicional basada en la categoría actual, si es necesario.
+    fun setCurrentCategory(category: String, numberOfQuestions: Int) {
+
     }
-
-
 
 
     companion object {

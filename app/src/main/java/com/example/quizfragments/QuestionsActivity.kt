@@ -1,10 +1,15 @@
-package com.example.quizfragments
+package com.example.quizfragments;
 
 import androidx.appcompat.app.AppCompatActivity
+
+
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
+
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+
+
 
 class QuestionsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,6 +21,7 @@ class QuestionsActivity : AppCompatActivity() {
 
         val viewPager = findViewById<ViewPager2>(R.id.view_pager)
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
+
 
         val categories = listOf(
             "Legendary Drivers",
@@ -33,5 +39,13 @@ class QuestionsActivity : AppCompatActivity() {
         }.attach()
 
 
+
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                val currentFragment = adapter.createFragment(position) as QuestionsFragment
+                currentFragment.makeQuestions(numberOfQuestions, fullName, categories[position])
+            }
+        })
     }
 }

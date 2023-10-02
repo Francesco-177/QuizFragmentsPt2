@@ -1,5 +1,8 @@
 package com.example.quizfragments
 
+import android.os.Parcel
+import android.os.Parcelable
+
 data class Question(
     val id: Int,
     val question: String,
@@ -8,8 +11,4 @@ data class Question(
     val optionThree: String,
     val correctAnswer: Int,
     val category: String
-
-    )
-
-
-
+)
