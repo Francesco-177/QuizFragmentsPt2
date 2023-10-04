@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "QuizFragments"
+rootProject.name = "QuizFragmentsPt2"
 include(":app")
  

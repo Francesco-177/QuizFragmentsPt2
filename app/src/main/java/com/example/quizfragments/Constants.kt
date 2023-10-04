@@ -3,7 +3,7 @@ package com.example.quizfragments
 
 object Constants{
 
-    var data_position: String? = null
+
 
     fun getQuestions(): ArrayList<Question> {
 

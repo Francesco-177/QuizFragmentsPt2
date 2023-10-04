@@ -5,23 +5,32 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-val TAB_GENRES_SCROLLABLE = listOf(
-    R.string.legendary_drivers,
-    R.string.historic_teams,
-    R.string.records_and_statistics,
-    R.string.epic_races,
-    R.string.f1_season
+val categories = listOf(
+    "Legendary Drivers",
+    "Historic Teams",
+    "Records and Statistics",
+    "Epic Races",
+    "2021 F1 Season"
 )
-
 
 class QuestionsCategoryAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
-    override fun getItemCount(): Int {
-        return TAB_GENRES_SCROLLABLE.size
+    private val fragmentList: MutableList<Fragment> = ArrayList()
+    private val fragmentTitleList: MutableList<String> = ArrayList()
+
+    fun addFragment(fragment: Fragment, title: String) {
+        fragmentList.add(fragment)
+        fragmentTitleList.add(title)
     }
 
-    override fun createFragment(position: Int): Fragment {
-        return QuestionsFragment()
+    fun getFragment(position: Int): Fragment {
+        return fragmentList[position]
     }
+
+    override fun getItemCount(): Int = fragmentList.size
+
+    override fun createFragment(position: Int): Fragment = fragmentList[position]
+
+    fun getTitle(position: Int): String = fragmentTitleList[position]
 }
