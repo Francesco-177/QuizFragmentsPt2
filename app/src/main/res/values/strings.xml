@@ -26,6 +26,7 @@
     <string name="total_questions_text">Total questions: %s</string>
     <string name="select_option_validation">Please select an option</string>
     <string name="finish_quiz">FINISH QUIZ</string>
+    <string name="finish_category">FINISH CATEGORY</string>
     <string name="next_question">NEXT QUESTION</string>
 
     <string name="category_header_text">nothing</string>
@@ -36,6 +37,8 @@
     <string name="records_and_statistics">Records and Statistics</string>
     <string name="epic_races">Epic Races</string>
     <string name="f1_season">2021 F1 Season</string>
+    <string name="finished_category_text">finished category</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

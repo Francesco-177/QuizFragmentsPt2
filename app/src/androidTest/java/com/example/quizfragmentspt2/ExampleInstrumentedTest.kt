@@ -1,4 +1,4 @@
-package com.example.quizfragments
+package com.example.quizfragmentspt2
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.quizfragments"
+    namespace = "com.example.quizfragmentspt2"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.quizfragments"
+        applicationId = "com.example.quizfragmentspt2"
         minSdk = 26
         targetSdk = 33
         versionCode = 1

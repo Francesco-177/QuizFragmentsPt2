@@ -9,6 +9,56 @@
     android:layout_marginTop="@dimen/grid_4">
 
 
+    <TextView
+        android:id="@+id/quiz_name"
+        android:fontFamily="@font/formula1_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/medium_text_size"
+        android:padding="@dimen/grid_12"
+        android:text="@string/quiz_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/score_header"
+        android:fontFamily="@font/formula1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/grid_24"
+        android:padding="@dimen/grid_12"
+        app:layout_constraintBottom_toTopOf="@+id/tab_layout"
+
+        android:text="@string/score_text"
+        android:background="@drawable/selected_button_design"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quiz_name"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="scrollable"
+        android:layout_marginTop="@dimen/grid_12"
+        app:layout_constraintTop_toBottomOf="@id/score_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/tab_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+
 
     <TextView
         android:id="@+id/questions_header"
@@ -20,8 +70,26 @@
         android:padding="@dimen/grid_12"
         android:text="@string/questions_header"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout"
         app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/finished_category_header"
+        android:fontFamily="@font/formula1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/grid_32"
+        android:padding="@dimen/grid_12"
+        android:visibility="gone"
+        android:text="@string/finished_category_text"
+        app:layout_constraintTop_toTopOf="@id/tab_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+    />
+
 
 
     <Button

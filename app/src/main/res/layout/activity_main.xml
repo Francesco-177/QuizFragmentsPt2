@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.quizfragments.LoginFragment"
+        android:name="com.example.quizfragmentspt2.LoginFragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent"/>
 

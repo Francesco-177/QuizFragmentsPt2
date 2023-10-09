@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/difficultyFragment"
-        android:name="com.example.quizfragments.DifficultyFragment"
+        android:name="com.example.quizfragmentspt2.DifficultyFragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent"/>
 

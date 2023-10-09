@@ -1,4 +1,4 @@
-package com.example.quizfragments
+package com.example.quizfragmentspt2
 
 import org.junit.Test
 

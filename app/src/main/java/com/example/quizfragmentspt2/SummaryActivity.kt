@@ -1,4 +1,4 @@
-package com.example.quizfragments
+package com.example.quizfragmentspt2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

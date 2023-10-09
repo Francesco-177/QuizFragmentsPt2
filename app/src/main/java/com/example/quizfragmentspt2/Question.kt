@@ -1,7 +1,4 @@
-package com.example.quizfragments
-
-import android.os.Parcel
-import android.os.Parcelable
+package com.example.quizfragmentspt2
 
 data class Question(
     val id: Int,
