@@ -46,6 +46,7 @@ class QuestionsFragment : Fragment() {
     private var score: Int = 0
 
     private var numberOfQuestions:Int? = 0
+    private var totalNumberOfQuestions:Int? = 0
     private var fullName:String? = ""
 
     private lateinit var tabLayout: TabLayout
@@ -59,7 +60,8 @@ class QuestionsFragment : Fragment() {
     private var f1SeasonQuestions: List<Question>? = null
 
     private var currentCategory: String = "Legendary Drivers"
-    private val completedCategories = mutableSetOf<String>() // Para rastrear las categorías completadas
+    private val completedCategories = mutableSetOf<String>()
+
     private var allTabsCompleted = false
 
 
@@ -103,6 +105,7 @@ class QuestionsFragment : Fragment() {
 
         fullName = arguments?.getString("fullName")
         numberOfQuestions = arguments?.getInt("numberOfQuestions")
+
 
         // Inicializa las vistas
         tabLayout = view.findViewById(R.id.tab_layout)
@@ -158,17 +161,6 @@ class QuestionsFragment : Fragment() {
                 // Carga la lista de preguntas correspondiente
                 loadQuestionsForCategory(currentCategory)
 
-                //TODO: CHECK THIS
-
-                if (mCurrentPosition == numberOfQuestions) {
-                    optionOneButton?.visibility = View.GONE
-                    optionTwoButton?.visibility = View.GONE
-                    optionThreeButton?.visibility = View.GONE
-                    questionsHeader?.visibility = View.GONE
-                    submitButton?.visibility = View.GONE
-                    finishedCategoryHeader?.visibility = View.VISIBLE
-                }
-
 
             }
 
@@ -176,6 +168,8 @@ class QuestionsFragment : Fragment() {
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
+
+
             }
         })
 
@@ -185,18 +179,14 @@ class QuestionsFragment : Fragment() {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-    }
-
-
 
     fun logicQuestion(numberOfQuestions:Int, fullName:String){
         Log.d("QuestionsFragment", "logicQuestion function started") // Agregar registro de fin de la función
 
         Log.d("QuestionsFragment", "mQuestionsList: $mQuestionsList")
+
+        totalNumberOfQuestions = numberOfQuestions?.times(5)
+        Log.d("QuestionsFragment", "totalNumberOfQuestions: $totalNumberOfQuestions")
 
         makeQuestion()
 
@@ -252,24 +242,17 @@ class QuestionsFragment : Fragment() {
                 if (mCurrentPosition < numberOfQuestions) {
                     mCurrentPosition++
 
+
+
                     // Llamar a la función para obtener la pregunta actual
                     makeQuestion()
 
-                }else{
-                    /*
-                    TODO: CHECK THIS I NEED if (mCurrentPosition == numberOfQuestions)
-                     HERE NECESITO QUE EL ESTA FUNCION SE EJECUTE INDIVIDUALMENTE
-                     PARA CADA TAB
-
-
-                     */
-
+                }else if (mCurrentPosition == numberOfQuestions) {
+                    completeCategory(currentCategory)
+                    loadQuestionsForCategory(currentCategory)
                 }
-
-            }else{
-                //logica para cuando salte de pregunta
-                Toast.makeText(requireContext(), getString(R.string.select_option_validation), Toast.LENGTH_LONG).show()
             }
+
 
         }
 
@@ -299,9 +282,15 @@ class QuestionsFragment : Fragment() {
         } else {
             submitButton?.text = getString(R.string.next_question)
         }
+
+
     }
 
     private fun loadQuestionsForCategory(category: String) {
+        // Establece la categoría activa en la nueva categoría
+        currentCategory = category
+
+        // Restablece la lista de preguntas para la nueva categoría
         mQuestionsList = when (category) {
             "Legendary Drivers" -> legendaryDriversQuestions as ArrayList<Question>?
             "Historic Teams" -> historicTeamsQuestions as ArrayList<Question>?
@@ -314,6 +303,27 @@ class QuestionsFragment : Fragment() {
         makeQuestion()
         numberOfQuestions?.let { fullName?.let { it1 -> logicQuestion(it, it1) } }
 
+        if (completedCategories.contains(category) && category == currentCategory) {
+            // Ocultar el mensaje de categoría completada solo si es la categoría actual
+            optionOneButton?.visibility = View.GONE
+            optionTwoButton?.visibility = View.GONE
+            optionThreeButton?.visibility = View.GONE
+            questionsHeader?.visibility = View.GONE
+            submitButton?.visibility = View.GONE
+            finishedCategoryHeader?.visibility = View.VISIBLE
+        } else {
+            optionOneButton?.visibility = View.VISIBLE
+            optionTwoButton?.visibility = View.VISIBLE
+            optionThreeButton?.visibility = View.VISIBLE
+            questionsHeader?.visibility = View.VISIBLE
+            submitButton?.visibility = View.VISIBLE
+            finishedCategoryHeader?.visibility = View.GONE
+        }
+    }
+
+    private fun completeCategory(category: String) {
+        // Agrega la categoría completada a la lista de categorías completadas
+        completedCategories.add(category)
     }
 
     private fun countScore(numberOfQuestions:Int) {
