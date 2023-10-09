@@ -38,7 +38,7 @@ class QuestionsFragment : Fragment() {
     private val finishedCategoryHeader: TextView?
         get() = view?.findViewById(R.id.finished_category_header)
 
-    private var mCurrentPosition: Int = 1 // Default and the first question position
+    //private var currentIndexForCategory: Int = 1
     private var mQuestionsList: ArrayList<Question>? = null
     private var mSelectedOptionPosition: Int = 0
     private var mCorrectAnswers: Int = 0
@@ -62,17 +62,13 @@ class QuestionsFragment : Fragment() {
     private var currentCategory: String = "Legendary Drivers"
     private val completedCategories = mutableSetOf<String>()
 
-    private var allTabsCompleted = false
+    private val categoryIndices = mutableMapOf<String, Int>()
+
+    private var remainingQuestions:Int = 0
+
+    private var currentIndexForCategory: Int = 0
 
 
-
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,6 +77,7 @@ class QuestionsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_questions, container, false)
 
         val questionList = Constants.getQuestions()
+
 
         // Create a map to store shuffled lists by category
         val questionsByCategory = mutableMapOf<String, ArrayList<Question>>()
@@ -158,6 +155,11 @@ class QuestionsFragment : Fragment() {
                     4 -> "2021 F1 Season"
                     else -> "Legendary Drivers" // Valor predeterminado en caso de error
                 }
+
+
+                // Actualiza el índice para la categoría actual
+                currentIndexForCategory = categoryIndices.getOrDefault(currentCategory, 1)
+
                 // Carga la lista de preguntas correspondiente
                 loadQuestionsForCategory(currentCategory)
 
@@ -181,13 +183,19 @@ class QuestionsFragment : Fragment() {
 
 
     fun logicQuestion(numberOfQuestions:Int, fullName:String){
+
         Log.d("QuestionsFragment", "logicQuestion function started") // Agregar registro de fin de la función
+
+        scoreHeader?.text =  getString(R.string.score_text,score.toString())
+
+        currentIndexForCategory = categoryIndices[currentCategory] ?: 1
+
+        categoryIndices[currentCategory] = currentIndexForCategory
 
         Log.d("QuestionsFragment", "mQuestionsList: $mQuestionsList")
 
-        totalNumberOfQuestions = numberOfQuestions?.times(5)
+        totalNumberOfQuestions = numberOfQuestions.times(categories.size)
         Log.d("QuestionsFragment", "totalNumberOfQuestions: $totalNumberOfQuestions")
-
         makeQuestion()
 
         optionOneButton?.setOnClickListener{
@@ -217,7 +225,7 @@ class QuestionsFragment : Fragment() {
         submitButton?.setOnClickListener{
             // Verificar si una opción se ha seleccionado antes de procesar la respuesta
             if (mSelectedOptionPosition != 0) {
-                val question = mQuestionsList?.get(mCurrentPosition - 1)
+                val question = mQuestionsList?.get(currentIndexForCategory - 1)
 
                 // This is to check if the answer is wrong
                 if (question?.correctAnswer != mSelectedOptionPosition) {
@@ -231,25 +239,39 @@ class QuestionsFragment : Fragment() {
                 mSelectedOptionPosition = 0 // Restablece la selección de opción a 0 después de procesar la respuesta.
 
                 countScore(numberOfQuestions)
+                remainingQuestions = totalNumberOfQuestions!! - (mWrongAnswers + mCorrectAnswers)
 
                 // Verifica si es matemáticamente imposible ganar
-               // if (isImpossibleToWin(numberOfQuestions)) {
-               //     Toast.makeText(requireContext(), "¡Perdiste! Es matemáticamente imposible ganar.", Toast.LENGTH_LONG).show()
-               // }
+                if (isImpossibleToWin(score, totalNumberOfQuestions!!,remainingQuestions)) {
+                    Toast.makeText(requireContext(), "¡Es matemáticamente imposible ganar!", Toast.LENGTH_LONG).show()
+                }
 
 
-                // Incrementa mCurrentPosition solo si no has llegado al final de las preguntas
-                if (mCurrentPosition < numberOfQuestions) {
-                    mCurrentPosition++
+                if ((currentIndexForCategory) % numberOfQuestions == 0 && currentIndexForCategory != 1 && !completedCategories.contains(currentCategory)) {
 
-
-
-                    // Llamar a la función para obtener la pregunta actual
-                    makeQuestion()
-
-                }else if (mCurrentPosition == numberOfQuestions) {
                     completeCategory(currentCategory)
+
+                }
+                if(currentIndexForCategory < totalNumberOfQuestions!!){
+
+                    categoryIndices[currentCategory] = currentIndexForCategory + 1
+                    currentIndexForCategory = categoryIndices[currentCategory]!!
+
+                    Log.d("QuestionsFragment", "currentIndexForCategory: $currentIndexForCategory")
+
                     loadQuestionsForCategory(currentCategory)
+
+
+                }
+                if (completedCategories.size == categories.size) {
+                    // Todas las categorías han sido completadas, inicia la actividad de resumen
+                    val intent = Intent(context, SummaryActivity::class.java)
+                    intent.putExtra("fullName", fullName)
+                    intent.putExtra("numberOfQuestions", totalNumberOfQuestions)
+                    intent.putExtra("mCorrectAnswers", mCorrectAnswers)
+                    intent.putExtra("mWrongAnswers", mWrongAnswers)
+                    intent.putExtra("score", score)
+                    startActivity(intent)
                 }
             }
 
@@ -265,9 +287,9 @@ class QuestionsFragment : Fragment() {
         optionOneButton?.setBackgroundResource(R.drawable.default_button_design)
         optionTwoButton?.setBackgroundResource(R.drawable.default_button_design)
         optionThreeButton?.setBackgroundResource(R.drawable.default_button_design)
+        //Log.d("QuestionsFragment", "currentIndexForCategory: $currentIndexForCategory")
 
-        // Obtén la pregunta actual
-        val currentQuestion = mQuestionsList?.get(mCurrentPosition - 1)
+        val currentQuestion = mQuestionsList?.get(currentIndexForCategory)
 
         // Configura el texto de la pregunta en el TextView
         questionsHeader?.text = currentQuestion?.question
@@ -277,18 +299,20 @@ class QuestionsFragment : Fragment() {
         optionTwoButton?.text = currentQuestion?.optionTwo
         optionThreeButton?.text = currentQuestion?.optionThree
 
-        if (mCurrentPosition - 1 == numberOfQuestions) {
+        if (currentIndexForCategory  == numberOfQuestions) {
             submitButton?.text = getString(R.string.finish_category)
         } else {
             submitButton?.text = getString(R.string.next_question)
         }
-
 
     }
 
     private fun loadQuestionsForCategory(category: String) {
         // Establece la categoría activa en la nueva categoría
         currentCategory = category
+
+        // Obtén el índice actual para esta categoría
+        currentIndexForCategory = categoryIndices.getOrDefault(category, 1)
 
         // Restablece la lista de preguntas para la nueva categoría
         mQuestionsList = when (category) {
@@ -300,25 +324,29 @@ class QuestionsFragment : Fragment() {
             else -> null // Manejo de error si la categoría no coincide
         }
 
-        makeQuestion()
-        numberOfQuestions?.let { fullName?.let { it1 -> logicQuestion(it, it1) } }
+        // Verifica si se ha completado la categoría actual y muestra el mensaje correspondiente
+        if (completedCategories.contains(category)) {
 
-        if (completedCategories.contains(category) && category == currentCategory) {
-            // Ocultar el mensaje de categoría completada solo si es la categoría actual
             optionOneButton?.visibility = View.GONE
             optionTwoButton?.visibility = View.GONE
             optionThreeButton?.visibility = View.GONE
             questionsHeader?.visibility = View.GONE
             submitButton?.visibility = View.GONE
             finishedCategoryHeader?.visibility = View.VISIBLE
+
         } else {
+
             optionOneButton?.visibility = View.VISIBLE
             optionTwoButton?.visibility = View.VISIBLE
             optionThreeButton?.visibility = View.VISIBLE
             questionsHeader?.visibility = View.VISIBLE
             submitButton?.visibility = View.VISIBLE
             finishedCategoryHeader?.visibility = View.GONE
+
         }
+
+        makeQuestion()
+        numberOfQuestions?.let { fullName?.let { it1 -> logicQuestion(it, it1) } }
     }
 
     private fun completeCategory(category: String) {
@@ -337,37 +365,24 @@ class QuestionsFragment : Fragment() {
         scoreHeader?.text =  getString(R.string.score_text,score.toString())
     }
 
-    // Verifica si es matemáticamente imposible ganar
-
-    private fun isImpossibleToWin(numberOfQuestions: Int): Boolean {
-        val remainingQuestions = numberOfQuestions - (mWrongAnswers + mCorrectAnswers)
-
-        val maxPossibleScore = score + (remainingQuestions * getPossibleScorePerQuestion(numberOfQuestions))
-        val minRequiredScore = 1000
-        return maxPossibleScore < minRequiredScore
-    }
-
     // Obtiene el puntaje posible por pregunta en función de la cantidad de preguntas
     private fun getPossibleScorePerQuestion(totalQuestions: Int): Int {
         return when (totalQuestions) {
-            5 -> 100 // Puntaje por pregunta con 5 preguntas
-            10 -> 250 // Puntaje por pregunta con 10 preguntas
-            20 -> 500 // Puntaje por pregunta con 20 preguntas
+            25 -> 100 // Puntaje por pregunta con 5 preguntas
+            50 -> 250 // Puntaje por pregunta con 10 preguntas
+            100 -> 500 // Puntaje por pregunta con 20 preguntas
             else -> 0 // Valor predeterminado en caso de que el número de preguntas no coincida con ninguno de los casos
         }
     }
 
-    companion object {
-        private const val ARG_CATEGORY = "category"
 
-        fun newInstance(category: String): QuestionsFragment {
-            val fragment = QuestionsFragment()
-            val args = Bundle()
-            args.putString(ARG_CATEGORY, category)
-            fragment.arguments = args
-            return fragment
-        }
+    private fun isImpossibleToWin(score: Int, totalQuestions: Int, remainingQuestions: Int): Boolean {
+        val maxPossibleScore = score + (remainingQuestions * getPossibleScorePerQuestion(totalQuestions))
+        val minRequiredScore = 1000
+        return maxPossibleScore < minRequiredScore
     }
+
+
 
 
 
