@@ -158,34 +158,16 @@ class QuestionsFragment : Fragment() {
                 // Carga la lista de preguntas correspondiente
                 loadQuestionsForCategory(currentCategory)
 
-                // Verifica si numberOfQuestions es igual a mCurrentPosition en la pestaña/tab actual
-                val isTabCompleted = numberOfQuestions == mCurrentPosition
+                //TODO: CHECK THIS
 
-                // Si todas las pestañas están completadas, establece allTabsCompleted en true
-                allTabsCompleted = allTabsCompleted || isTabCompleted
-
-                if (isTabCompleted) {
+                if (mCurrentPosition == numberOfQuestions) {
                     optionOneButton?.visibility = View.GONE
                     optionTwoButton?.visibility = View.GONE
                     optionThreeButton?.visibility = View.GONE
                     questionsHeader?.visibility = View.GONE
                     submitButton?.visibility = View.GONE
-
                     finishedCategoryHeader?.visibility = View.VISIBLE
                 }
-
-                // Si todas las pestañas están completadas, lanza la SummaryActivity
-                if (allTabsCompleted) {
-                    val intent = Intent(context, SummaryActivity::class.java)
-                    intent.putExtra("fullName", fullName)
-                    intent.putExtra("numberOfQuestions", numberOfQuestions)
-                    intent.putExtra("mCorrectAnswers", mCorrectAnswers)
-                    intent.putExtra("mWrongAnswers", mWrongAnswers)
-                    startActivity(intent)
-                }
-
-
-
 
 
             }
@@ -272,6 +254,15 @@ class QuestionsFragment : Fragment() {
 
                     // Llamar a la función para obtener la pregunta actual
                     makeQuestion()
+
+                }else{
+                    /*
+                    TODO: CHECK THIS I NEED if (mCurrentPosition == numberOfQuestions)
+                     HERE NECESITO QUE EL ESTA FUNCION SE EJECUTE INDIVIDUALMENTE
+                     PARA CADA TAB
+
+
+                     */
 
                 }
 
