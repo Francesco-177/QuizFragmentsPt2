@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -38,6 +37,15 @@ class QuestionsFragment : Fragment() {
     private val finishedCategoryHeader: TextView?
         get() = view?.findViewById(R.id.finished_category_header)
 
+    private val mediumButtonQuestion: Button?
+        get() = view?.findViewById(R.id.medium_button_question)
+
+    private val hardButtonQuestion: Button?
+        get() = view?.findViewById(R.id.hard_button_question)
+
+    private val askContinueHeader: TextView?
+        get() = view?.findViewById(R.id.ask_continue_header)
+
     //private var currentIndexForCategory: Int = 1
     private var mQuestionsList: ArrayList<Question>? = null
     private var mSelectedOptionPosition: Int = 0
@@ -48,6 +56,7 @@ class QuestionsFragment : Fragment() {
     private var numberOfQuestions:Int? = 0
     private var totalNumberOfQuestions:Int? = 0
     private var fullName:String? = ""
+    private var difficulty:String? = ""
 
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
@@ -67,6 +76,8 @@ class QuestionsFragment : Fragment() {
     private var remainingQuestions:Int = 0
 
     private var currentIndexForCategory: Int = 0
+    private var copied: Boolean = false
+
 
 
     override fun onCreateView(
@@ -102,6 +113,7 @@ class QuestionsFragment : Fragment() {
 
         fullName = arguments?.getString("fullName")
         numberOfQuestions = arguments?.getInt("numberOfQuestions")
+        difficulty = arguments?.getString("difficulty")
 
 
         // Inicializa las vistas
@@ -182,7 +194,14 @@ class QuestionsFragment : Fragment() {
     }
 
 
-    fun logicQuestion(numberOfQuestions:Int, fullName:String){
+    fun logicQuestion(numberOfQuestion:Int, fullName:String, quizDifficulty:String){
+
+        if (!copied) {
+            // Copia el valor del parámetro solo la primera vez
+            numberOfQuestions = numberOfQuestion
+            difficulty = quizDifficulty
+            copied = true
+        }
 
         Log.d("QuestionsFragment", "logicQuestion function started") // Agregar registro de fin de la función
 
@@ -192,11 +211,12 @@ class QuestionsFragment : Fragment() {
 
         categoryIndices[currentCategory] = currentIndexForCategory
 
-        Log.d("QuestionsFragment", "mQuestionsList: $mQuestionsList")
+        //Log.d("QuestionsFragment", "mQuestionsList: $mQuestionsList")
 
-        totalNumberOfQuestions = numberOfQuestions.times(categories.size)
+        totalNumberOfQuestions = numberOfQuestions?.times(categories.size)
         Log.d("QuestionsFragment", "totalNumberOfQuestions: $totalNumberOfQuestions")
-        makeQuestion()
+
+        loadQuestionsForCategory(currentCategory)
 
         optionOneButton?.setOnClickListener{
 
@@ -225,7 +245,7 @@ class QuestionsFragment : Fragment() {
         submitButton?.setOnClickListener{
             // Verificar si una opción se ha seleccionado antes de procesar la respuesta
             if (mSelectedOptionPosition != 0) {
-                val question = mQuestionsList?.get(currentIndexForCategory - 1)
+                val question = mQuestionsList?.get(currentIndexForCategory)
 
                 // This is to check if the answer is wrong
                 if (question?.correctAnswer != mSelectedOptionPosition) {
@@ -238,41 +258,93 @@ class QuestionsFragment : Fragment() {
 
                 mSelectedOptionPosition = 0 // Restablece la selección de opción a 0 después de procesar la respuesta.
 
-                countScore(numberOfQuestions)
+                difficulty?.let { it1 -> countScore(it1) }
                 remainingQuestions = totalNumberOfQuestions!! - (mWrongAnswers + mCorrectAnswers)
 
                 // Verifica si es matemáticamente imposible ganar
-                if (isImpossibleToWin(score, totalNumberOfQuestions!!,remainingQuestions)) {
-                    Toast.makeText(requireContext(), "¡Es matemáticamente imposible ganar!", Toast.LENGTH_LONG).show()
+                if (difficulty?.let { it1 -> isImpossibleToWin(score, it1,remainingQuestions) } == true) {
+                    Log.d("QuestionsFragment", "isImpossibleToWin")
+
+                    when (difficulty) {
+                        "hard" -> {
+                            val intent = Intent(context, SummaryActivity::class.java)
+                            intent.putExtra("fullName", fullName)
+                            intent.putExtra("numberOfQuestions", totalNumberOfQuestions)
+                            intent.putExtra("mCorrectAnswers", mCorrectAnswers)
+                            intent.putExtra("mWrongAnswers", mWrongAnswers)
+                            intent.putExtra("score", score)
+                            startActivity(intent)
+                        }
+                        "medium" -> {
+                            hideViews()
+                            askContinueHeader?.visibility = View.VISIBLE
+                            hardButtonQuestion?.visibility = View.VISIBLE
+
+                            hardButtonQuestion?.setOnClickListener {
+                                difficulty = "hard"
+                                numberOfQuestions = 20
+                                totalNumberOfQuestions = numberOfQuestions!!.times(categories.size)
+                                resumeQuestions()
+                            }
+                        }
+                        "easy" -> {
+                            hideViews()
+                            askContinueHeader?.visibility = View.VISIBLE
+                            mediumButtonQuestion?.visibility = View.VISIBLE
+                            hardButtonQuestion?.visibility = View.VISIBLE
+
+                            mediumButtonQuestion?.setOnClickListener {
+                                difficulty = "medium"
+                                numberOfQuestions = 10
+                                totalNumberOfQuestions = numberOfQuestions!!.times(categories.size)
+                                resumeQuestions()
+                            }
+
+                            hardButtonQuestion?.setOnClickListener {
+                                difficulty = "hard"
+                                numberOfQuestions = 20
+                                totalNumberOfQuestions = numberOfQuestions!!.times(categories.size)
+                                resumeQuestions()
+                            }
+                        }
+                        else -> {
+                            // Manejar otro caso si es necesario
+                        }
+                    }
+
+                    //Toast.makeText(requireContext(), "¡Es matemáticamente imposible ganar!",Toast.LENGTH_LONG).show()
+                }else{
+
+
+                    if ((currentIndexForCategory) % numberOfQuestions!! == 0 && currentIndexForCategory != 1 && !completedCategories.contains(currentCategory)) {
+
+                        completeCategory(currentCategory)
+
+                    }
+
+                    if(currentIndexForCategory < totalNumberOfQuestions!!){
+                        Log.d("QuestionsFragment", "currentIndexForCategory: $currentIndexForCategory")
+                        categoryIndices[currentCategory] = currentIndexForCategory + 1
+                        currentIndexForCategory = categoryIndices[currentCategory]!!
+
+                        loadQuestionsForCategory(currentCategory)
+
+                    }
+                    if (completedCategories.size == categories.size) {
+                        // Todas las categorías han sido completadas, inicia la actividad de resumen
+                        val intent = Intent(context, SummaryActivity::class.java)
+                        intent.putExtra("fullName", fullName)
+                        intent.putExtra("numberOfQuestions", totalNumberOfQuestions)
+                        intent.putExtra("mCorrectAnswers", mCorrectAnswers)
+                        intent.putExtra("mWrongAnswers", mWrongAnswers)
+                        intent.putExtra("score", score)
+                        startActivity(intent)
+                    }
+
                 }
 
 
-                if ((currentIndexForCategory) % numberOfQuestions == 0 && currentIndexForCategory != 1 && !completedCategories.contains(currentCategory)) {
 
-                    completeCategory(currentCategory)
-
-                }
-                if(currentIndexForCategory < totalNumberOfQuestions!!){
-
-                    categoryIndices[currentCategory] = currentIndexForCategory + 1
-                    currentIndexForCategory = categoryIndices[currentCategory]!!
-
-                    Log.d("QuestionsFragment", "currentIndexForCategory: $currentIndexForCategory")
-
-                    loadQuestionsForCategory(currentCategory)
-
-
-                }
-                if (completedCategories.size == categories.size) {
-                    // Todas las categorías han sido completadas, inicia la actividad de resumen
-                    val intent = Intent(context, SummaryActivity::class.java)
-                    intent.putExtra("fullName", fullName)
-                    intent.putExtra("numberOfQuestions", totalNumberOfQuestions)
-                    intent.putExtra("mCorrectAnswers", mCorrectAnswers)
-                    intent.putExtra("mWrongAnswers", mWrongAnswers)
-                    intent.putExtra("score", score)
-                    startActivity(intent)
-                }
             }
 
 
@@ -291,6 +363,7 @@ class QuestionsFragment : Fragment() {
 
         val currentQuestion = mQuestionsList?.get(currentIndexForCategory)
 
+
         // Configura el texto de la pregunta en el TextView
         questionsHeader?.text = currentQuestion?.question
 
@@ -299,7 +372,8 @@ class QuestionsFragment : Fragment() {
         optionTwoButton?.text = currentQuestion?.optionTwo
         optionThreeButton?.text = currentQuestion?.optionThree
 
-        if (currentIndexForCategory  == numberOfQuestions) {
+        //TODO check this don't function
+        if (currentIndexForCategory-1 == numberOfQuestions) {
             submitButton?.text = getString(R.string.finish_category)
         } else {
             submitButton?.text = getString(R.string.next_question)
@@ -346,7 +420,7 @@ class QuestionsFragment : Fragment() {
         }
 
         makeQuestion()
-        numberOfQuestions?.let { fullName?.let { it1 -> logicQuestion(it, it1) } }
+
     }
 
     private fun completeCategory(category: String) {
@@ -354,11 +428,11 @@ class QuestionsFragment : Fragment() {
         completedCategories.add(category)
     }
 
-    private fun countScore(numberOfQuestions:Int) {
-        score = when (numberOfQuestions) {
-            5 -> (mCorrectAnswers * 100) - (mWrongAnswers * 100) // 100 puntos por respuesta correcta y 100 puntos restados por respuesta incorrecta
-            10 -> (mCorrectAnswers * 250) - (mWrongAnswers * 250) // 250 puntos por respuesta correcta y 250 puntos restados por respuesta incorrecta
-            20 -> (mCorrectAnswers * 500) - (mWrongAnswers * 500) // 500 puntos por respuesta correcta y 500 puntos restados por respuesta incorrecta
+    private fun countScore(difficulty: String) {
+        score = when (difficulty) {
+            "easy" -> (mCorrectAnswers * 100) - (mWrongAnswers * 100) // 100 puntos por respuesta correcta y 100 puntos restados por respuesta incorrecta
+            "medium" -> (mCorrectAnswers * 250) - (mWrongAnswers * 250) // 250 puntos por respuesta correcta y 250 puntos restados por respuesta incorrecta
+            "hard" -> (mCorrectAnswers * 500) - (mWrongAnswers * 500) // 500 puntos por respuesta correcta y 500 puntos restados por respuesta incorrecta
             else -> 0 // Valor predeterminado si el número de preguntas no coincide con ninguno de los casos
         }
 
@@ -366,26 +440,59 @@ class QuestionsFragment : Fragment() {
     }
 
     // Obtiene el puntaje posible por pregunta en función de la cantidad de preguntas
-    private fun getPossibleScorePerQuestion(totalQuestions: Int): Int {
-        return when (totalQuestions) {
-            25 -> 100 // Puntaje por pregunta con 5 preguntas
-            50 -> 250 // Puntaje por pregunta con 10 preguntas
-            100 -> 500 // Puntaje por pregunta con 20 preguntas
+    private fun getPossibleScorePerQuestion(difficulty: String): Int {
+        return when (difficulty) {
+            "easy" -> 100 // Puntaje por pregunta con 5 preguntas
+            "medium" -> 250 // Puntaje por pregunta con 10 preguntas
+            "hard" -> 500 // Puntaje por pregunta con 20 preguntas
             else -> 0 // Valor predeterminado en caso de que el número de preguntas no coincida con ninguno de los casos
         }
     }
 
 
-    private fun isImpossibleToWin(score: Int, totalQuestions: Int, remainingQuestions: Int): Boolean {
-        val maxPossibleScore = score + (remainingQuestions * getPossibleScorePerQuestion(totalQuestions))
+    private fun isImpossibleToWin(score: Int, difficulty: String, remainingQuestions: Int): Boolean {
+        val maxPossibleScore = score + (remainingQuestions * getPossibleScorePerQuestion(difficulty))
         val minRequiredScore = 1000
         return maxPossibleScore < minRequiredScore
     }
 
+    private fun resumeQuestions() {
+        Log.d("QuestionsFragment", "ResumeQuestions function started")
+
+        //Log.d("QuestionsFragment", "NewNumberOfQuestions: $numberOfQuestion")
+        //Log.d("QuestionsFragment", "NewTotalNumberOfQuestions: $totalNumberOfQuestions")
 
 
+        // Restaura las vistas visibles y carga las preguntas para la categoría actual
+        optionOneButton?.visibility = View.VISIBLE
+        optionTwoButton?.visibility = View.VISIBLE
+        optionThreeButton?.visibility = View.VISIBLE
+        tabLayout.visibility = View.VISIBLE
+        questionsHeader?.visibility = View.VISIBLE
+
+        askContinueHeader?.visibility = View.GONE
+        mediumButtonQuestion?.visibility = View.GONE
+        hardButtonQuestion?.visibility = View.GONE
+
+        Log.d("QuestionsFragment", "ResumeQuestions function finished")
 
 
+    }
+
+
+    private fun hideViews(){
+        Log.d("QuestionsFragment", "hideViews function started")
+
+        optionOneButton?.visibility = View.GONE
+        optionTwoButton?.visibility = View.GONE
+        optionThreeButton?.visibility = View.GONE
+        tabLayout.visibility = View.INVISIBLE
+        questionsHeader?.visibility = View.INVISIBLE
+
+        Log.d("QuestionsFragment", "hideViews function finished")
+
+
+    }
 
 
 

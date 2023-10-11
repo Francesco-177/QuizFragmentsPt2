@@ -34,22 +34,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/quiz_name"/>
 
-        <TextView
-            android:id="@+id/ask_continue_header"
-            android:fontFamily="@font/formula1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="@dimen/grid_32"
-            android:padding="@dimen/grid_12"
-            android:visibility="gone"
-            android:text="@string/ask_continue_text"
-            app:layout_constraintTop_toTopOf="@id/difficulty_header_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.5"
-            />
+
 
 
         <Button

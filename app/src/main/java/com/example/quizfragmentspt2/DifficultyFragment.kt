@@ -45,7 +45,9 @@ class DifficultyFragment : Fragment() {
     }
 
     fun getDifficulty(fullName:String){
-        var numberOfQuestions : Int = 0
+        var numberOfQuestions : Int
+
+        var difficulty: String
 
         val easyButton = view?.findViewById<Button>(R.id.easy_button)
 
@@ -57,28 +59,32 @@ class DifficultyFragment : Fragment() {
         easyButton?.setOnClickListener {
 
             numberOfQuestions = 5
-            launchQuestionsActivity(numberOfQuestions,fullName)
+            difficulty = "easy"
+            launchQuestionsActivity(numberOfQuestions,fullName, difficulty)
 
         }
 
 
         mediumButton?.setOnClickListener {
             numberOfQuestions = 10
-            launchQuestionsActivity(numberOfQuestions,fullName)
+            difficulty = "medium"
+            launchQuestionsActivity(numberOfQuestions,fullName, difficulty)
         }
 
         hardButton?.setOnClickListener {
             numberOfQuestions = 20
-            launchQuestionsActivity(numberOfQuestions,fullName)
+            difficulty = "hard"
+            launchQuestionsActivity(numberOfQuestions,fullName, difficulty)
 
         }
     }
 
-    private fun launchQuestionsActivity(numberOfQuestions:Int,fullName:String ){
+    private fun launchQuestionsActivity(numberOfQuestions:Int,fullName:String, difficulty:String){
         val intent = Intent(context, QuestionsActivity::class.java)
 
         intent.putExtra("fullName",fullName)
         intent.putExtra("numberOfQuestions",numberOfQuestions)
+        intent.putExtra("difficulty",difficulty)
 
         startActivity(intent)
 

@@ -28,12 +28,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="@dimen/grid_24"
+        android:textSize="@dimen/text_24"
         android:padding="@dimen/grid_12"
         app:layout_constraintBottom_toTopOf="@+id/tab_layout"
-
         android:text="@string/score_text"
-        android:background="@drawable/selected_button_design"
+        android:background="@drawable/score_header_design"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/quiz_name"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -58,8 +57,6 @@
         app:layout_constraintBottom_toBottomOf="parent" />
 
 
-
-
     <TextView
         android:id="@+id/questions_header"
         android:fontFamily="@font/formula1"
@@ -72,6 +69,65 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tab_layout"
         app:layout_constraintStart_toStartOf="parent"/>
+
+
+
+    <Button
+        android:id="@+id/easy_button_question"
+        android:textSize="@dimen/default_text_size"
+        android:layout_marginTop="@dimen/grid_12"
+        android:background="@drawable/easy_button_design"
+        android:gravity="center"
+        android:paddingBottom="@dimen/grid_4"
+        android:paddingTop="@dimen/grid_4"
+        android:paddingLeft="@dimen/grid_32"
+        android:paddingRight="@dimen/grid_32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/ask_continue_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/formula1"
+        android:text="@string/easy_button"/>
+
+    <Button
+        android:id="@+id/medium_button_question"
+        android:textSize="@dimen/default_text_size"
+        android:layout_marginTop="@dimen/grid_12"
+        android:gravity="center"
+        android:background="@drawable/medium_button_desing"
+        android:paddingBottom="@dimen/grid_4"
+        android:paddingTop="@dimen/grid_4"
+        android:paddingLeft="@dimen/grid_32"
+        android:paddingRight="@dimen/grid_32"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/easy_button_question"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/formula1"
+        android:text="@string/medium_button"/>
+
+    <Button
+        android:id="@+id/hard_button_question"
+        android:textSize="@dimen/default_text_size"
+        android:layout_marginTop="@dimen/grid_12"
+        android:gravity="center"
+        android:background="@drawable/hard_button_design"
+        android:paddingBottom="@dimen/grid_4"
+        android:paddingTop="@dimen/grid_4"
+        android:paddingLeft="@dimen/grid_32"
+        android:paddingRight="@dimen/grid_32"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/medium_button_question"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/formula1"
+        android:text="@string/hard_button"/>
 
     <TextView
         android:id="@+id/finished_category_header"
@@ -89,6 +145,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.5"
     />
+
+    <TextView
+        android:id="@+id/ask_continue_header"
+        android:fontFamily="@font/formula1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/default_text_size"
+        android:visibility="gone"
+        android:padding="@dimen/grid_12"
+        android:text="@string/ask_continue_text"
+        app:layout_constraintTop_toTopOf="@id/tab_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
 
 
