@@ -24,6 +24,8 @@
     <string name="correct_answers_text">Correct answers: %s</string>
     <string name="wrong_answers_text">Wrong answers: %s</string>
     <string name="total_questions_text">Total questions: %s</string>
+    <string name="remaining_questions_text">Remaining questions: %s</string>
+    <string name="skipped_questions_text">Skipped questions: %s</string>
     <string name="select_option_validation">Please select an option</string>
     <string name="finish_quiz">FINISH QUIZ</string>
     <string name="finish_category">FINISH CATEGORY</string>

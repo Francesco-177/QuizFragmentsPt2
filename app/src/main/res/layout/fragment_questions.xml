@@ -129,6 +129,25 @@
         android:fontFamily="@font/formula1"
         android:text="@string/hard_button"/>
 
+    <Button
+        android:id="@+id/finish_quiz_button"
+        android:textSize="@dimen/default_text_size"
+        android:layout_marginTop="@dimen/grid_12"
+        android:gravity="center"
+        android:background="@drawable/default_button_design"
+        android:paddingBottom="@dimen/grid_4"
+        android:paddingTop="@dimen/grid_4"
+        android:paddingLeft="@dimen/grid_32"
+        android:paddingRight="@dimen/grid_32"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/hard_button_question"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/formula1"
+        android:text="@string/finish_quiz"/>
+
     <TextView
         android:id="@+id/finished_category_header"
         android:fontFamily="@font/formula1"

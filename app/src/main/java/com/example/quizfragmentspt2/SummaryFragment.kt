@@ -34,6 +34,14 @@ class SummaryFragment : Fragment() {
 
     private val wrongAnswersTV: TextView?
         get() = view?.findViewById(R.id.wrong_answers)
+    private val skippedQuestionsTV: TextView?
+        get() = view?.findViewById(R.id.skipped_questions)
+
+    private val remainingQuestionsTV: TextView?
+        get() = view?.findViewById(R.id.remaining_questions)
+
+    private val scoreTV: TextView?
+        get() = view?.findViewById(R.id.score_header)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,21 +60,21 @@ class SummaryFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_summary, container, false)
     }
 
-    fun showResults(fullName:String, numberOfQuestions:Int, correctAnswers:Int, wrongAnswers:Int){
-        val fullNameText = getString(R.string.results_text,fullName)
-        resultsHeaderTV?.text = fullNameText
+    fun showResults(fullName:String, numberOfQuestions:Int, correctAnswers:Int, wrongAnswers:Int, remainingQuestions:Int,skippedQuestions:Int,score:Int){
 
+        resultsHeaderTV?.text = getString(R.string.results_text,fullName)
 
-        val totalQuestionsText = getString(R.string.total_questions_text, numberOfQuestions.toString())
-        totalQuestionsTV?.text= totalQuestionsText
+        totalQuestionsTV?.text= getString(R.string.total_questions_text, numberOfQuestions.toString())
 
-        val correctAnswersText = getString(R.string.correct_answers_text, correctAnswers.toString())
-        correctAnswersTV?.text= correctAnswersText
+        correctAnswersTV?.text= getString(R.string.correct_answers_text, correctAnswers.toString())
 
-        val wrongAnswersText = getString(R.string.wrong_answers_text, wrongAnswers.toString())
-        wrongAnswersTV?.text= wrongAnswersText
+        wrongAnswersTV?.text=  getString(R.string.wrong_answers_text, wrongAnswers.toString())
 
+        remainingQuestionsTV?.text= getString(R.string.remaining_questions_text, remainingQuestions.toString())
 
+        skippedQuestionsTV?.text= getString(R.string.skipped_questions_text, skippedQuestions.toString())
+
+        scoreTV?.text= getString(R.string.score_text, score.toString())
 
 
         finishButton?.setOnClickListener{
